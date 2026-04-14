@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="ToolForge - Ultimate SaaS Toolkit: Image Tools, Document Converters, ZIP/Unzip, Sitemap Generator, File Optimizer & more. 100% client-side, fast, secure.">
-  <meta name="keywords" content="image compressor, image resizer, zip unzip, excel to csv, sitemap generator, pdf tools, doc converter, file utilities, online tools, seo tools">
+  <meta name="description" content="ToolForge - Ultimate Sitemap Generator & SaaS Toolkit: Image Tools, Document Converters, ZIP/Unzip, File Optimizer & more. 100% client-side, fast, secure.">
+  <meta name="keywords" content="sitemap generator, image compressor, image resizer, zip unzip, excel to csv, pdf tools, doc converter, seo tools">
   <meta name="author" content="ToolForge">
   <meta name="robots" content="index, follow">
-  <title>ToolForge | Ultimate Image · Document · ZIP · Sitemap Suite</title>
+  <title>ToolForge | Ultimate Sitemap Generator & Toolkit</title>
   <!-- Tailwind + Font Awesome + Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,9 +21,8 @@
   <style>
     * { scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', system-ui, sans-serif; background: #fafcff; overflow-x: hidden; width: 100%; position: relative; }
-    /* Fix for any accidental overflow */
     .max-w-7xl, .container, section, footer, nav { max-width: 100%; overflow-x: hidden; }
-    /* Animated gradient hero - fixed overflow */
+    /* Animated gradient hero */
     .hero-bg {
       background: radial-gradient(ellipse at 20% 30%, #0f172a, #030712);
       position: relative;
@@ -75,7 +74,6 @@
       transition: background 0.15s;
     }
     .dropdown-content button:hover { background: #f3f4f6; color: #4f46e5; }
-    /* Mobile dropdown handling */
     @media (max-width: 768px) {
       .dropdown-content { position: static; background: #f9fafb; border: none; box-shadow: none; display: none; padding-left: 0.5rem; margin-top: 0.25rem; }
       .dropdown.active .dropdown-content { display: block; }
@@ -85,14 +83,11 @@
     @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
     .testimonial-card { transition: all 0.2s; }
     .testimonial-card:hover { transform: scale(1.01); background: white; }
-    /* Fix for any right gap */
-    img, svg, video, canvas { max-width: 100%; height: auto; }
-    .container, .max-w-7xl { margin-left: auto; margin-right: auto; }
   </style>
 </head>
 <body class="antialiased">
 
-  <!-- NAVBAR with Dropdowns (fully responsive + mobile toggle) -->
+  <!-- NAVBAR with Dropdowns -->
   <nav class="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-gray-200/40 shadow-sm w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
@@ -113,7 +108,7 @@
         </div>
         <div class="md:hidden"><button id="mobileMenuBtn" class="text-gray-700 text-2xl"><i class="fas fa-bars"></i></button></div>
       </div>
-      <!-- Mobile menu (fully collapsible with submenus) -->
+      <!-- Mobile menu -->
       <div id="mobileMenu" class="md:hidden hidden pb-5 space-y-3 bg-white/95 rounded-2xl my-2 p-4 shadow-lg border w-full">
         <div class="mobile-dropdown"><div class="font-bold text-indigo-700 flex justify-between items-center"><span><i class="fas fa-image mr-2"></i>Image Tools</span><i class="fas fa-chevron-down text-xs toggle-sub"></i></div><div class="submenu hidden pl-4 space-y-2 mt-2"><button data-tool-nav="imageCompressor" class="block w-full text-left py-1">📸 Compress</button><button data-tool-nav="imageResizer" class="block w-full text-left py-1">📏 Resize</button><button data-tool-nav="imageConverter" class="block w-full text-left py-1">🔄 Convert</button><button data-tool-nav="webpConverter" class="block w-full text-left py-1">🌐 To WebP</button></div></div>
         <div class="mobile-dropdown"><div class="font-bold text-emerald-700 flex justify-between items-center"><span><i class="fas fa-file-alt mr-2"></i>Document Tools</span><i class="fas fa-chevron-down text-xs toggle-sub"></i></div><div class="submenu hidden pl-4 space-y-2 mt-2"><button data-tool-nav="docConverter" class="block w-full text-left py-1">📄 DOCX/TXT/PDF</button><button data-tool-nav="pdfToText" class="block w-full text-left py-1">📑 PDF → Text</button><button data-tool-nav="excelConverter" class="block w-full text-left py-1">📊 Excel → CSV</button></div></div>
@@ -124,49 +119,39 @@
     </div>
   </nav>
 
-  <!-- HERO SECTION (Bold, with stats and floating elements - NO GAP) -->
-  <section class="hero-bg text-white py-24 md:py-32 relative w-full">
+  <!-- HERO SECTION with SITEMAP GENERATOR as primary focus -->
+  <section class="hero-bg text-white py-20 md:py-24 relative w-full">
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col lg:flex-row items-center gap-12">
-        <div class="flex-1 text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 bg-indigo-500/20 backdrop-blur-sm rounded-full px-4 py-1.5 text-indigo-200 text-sm mb-6"><i class="fas fa-bolt"></i> <span>100% Local · Zero Uploads · Free Forever</span></div>
-          <h1 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">The <span class="text-indigo-300">Ultimate</span> Creator Toolkit</h1>
-          <p class="text-xl text-gray-200 mt-6 max-w-2xl">Compress, resize, convert images · Zip/Unzip files · Extract PDFs · Generate sitemaps — all in your browser, instantly. No registration, no bullshit.</p>
-          <div class="flex flex-wrap gap-4 mt-8 justify-center lg:justify-start">
-            <button data-tool-nav="imageCompressor" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-xl font-semibold transition shadow-lg flex items-center gap-2"><i class="fas fa-compress-alt"></i> Start Compressing</button>
-            <button data-tool-nav="zipCreator" class="bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 px-6 py-3 rounded-xl font-semibold transition"><i class="fas fa-file-archive"></i> Create ZIP</button>
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 bg-indigo-500/20 backdrop-blur-sm rounded-full px-4 py-1.5 text-indigo-200 text-sm mb-6"><i class="fas fa-bolt"></i> <span>100% Local · Zero Uploads · Free Forever</span></div>
+        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">The <span class="text-indigo-300">Ultimate Sitemap</span> & Creator Toolkit</h1>
+        <p class="text-xl text-gray-200 mt-6 max-w-2xl mx-auto">Generate sitemaps instantly · Compress, resize, convert images · Zip/Unzip files · Extract PDFs — all in your browser, no registration.</p>
+        
+        <!-- PRIMARY SITEMAP GENERATOR WIDGET in hero -->
+        <div class="glass-card rounded-2xl p-6 md:p-8 mt-10 text-gray-800 shadow-2xl max-w-2xl mx-auto">
+          <div class="flex items-center justify-center gap-3 mb-4"><i class="fas fa-sitemap text-3xl text-indigo-700"></i><h2 class="text-2xl font-bold">Sitemap Generator</h2></div>
+          <p class="text-gray-600 mb-4">Enter any website URL — fetch sitemap.xml for SEO audits.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input type="url" id="heroSitemapUrl" placeholder="https://example.com" class="flex-1 px-5 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-400 outline-none">
+            <button id="heroGenerateSitemapBtn" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-7 py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2"><i class="fas fa-arrow-right"></i> Generate</button>
           </div>
-          <div class="flex gap-6 mt-10 text-sm text-gray-300 justify-center lg:justify-start"><span><i class="fas fa-check-circle text-green-400"></i> 15+ Tools</span><span><i class="fas fa-shield-alt text-indigo-300"></i> Privacy First</span><span><i class="fas fa-tachometer-alt text-amber-300"></i> Instant</span></div>
+          <div id="heroSitemapResult" class="mt-5 max-h-60 overflow-y-auto bg-gray-50 rounded-xl p-3 text-sm hidden border"></div>
+          <div id="heroSitemapLoading" class="hidden text-indigo-600 mt-3 text-center"><i class="fas fa-spinner fa-spin"></i> Fetching sitemap...</div>
         </div>
-        <div class="flex-1 flex justify-center">
-          <div class="relative w-72 h-72 md:w-96 md:h-96 floating-icon">
-            <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
-            <i class="fas fa-cubes text-8xl md:text-9xl text-indigo-300/80 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
-            <i class="fas fa-file-alt text-6xl text-emerald-300/70 absolute top-10 right-5 animate-pulse"></i>
-            <i class="fas fa-image text-5xl text-amber-300/70 absolute bottom-10 left-5 animate-bounce"></i>
-          </div>
-        </div>
+        
+        <div class="flex flex-wrap justify-center gap-6 mt-10 text-sm text-gray-300"><span><i class="fas fa-check-circle text-green-400"></i> 15+ Tools</span><span><i class="fas fa-shield-alt text-indigo-300"></i> Privacy First</span><span><i class="fas fa-tachometer-alt text-amber-300"></i> Instant</span></div>
       </div>
     </div>
   </section>
 
-  <!-- SITEMAP GENERATOR CARD (prominent, no gap) -->
-  <section id="sitemap-gen" class="py-16 bg-gradient-to-b from-gray-50 to-white w-full">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="glass-card rounded-3xl p-6 md:p-8 shadow-2xl border border-indigo-100">
-        <div class="flex items-center gap-3 mb-4"><i class="fas fa-sitemap text-4xl text-indigo-600"></i><h2 class="text-3xl font-bold text-gray-800">Sitemap Generator</h2></div>
-        <p class="text-gray-600 mb-5">Enter any website URL and instantly fetch its sitemap.xml — perfect for SEO audits and webmaster tools.</p>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <input type="url" id="sitemapUrl" placeholder="https://example.com" class="flex-1 px-5 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-400 outline-none transition">
-          <button id="generateSitemapBtn" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2"><i class="fas fa-arrow-right"></i> Generate</button>
-        </div>
-        <div id="sitemapResult" class="mt-6 max-h-80 overflow-y-auto bg-gray-50 rounded-xl p-4 text-sm hidden border border-gray-200"></div>
-        <div id="sitemapLoading" class="hidden text-indigo-600 mt-4 text-center"><i class="fas fa-spinner fa-spin"></i> Fetching sitemap...</div>
-      </div>
+  <!-- ADDITIONAL SITEMAP INFO CARD (optional, but kept for completeness) -->
+  <section class="py-8 bg-white w-full">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <p class="text-gray-500"><i class="fas fa-info-circle text-indigo-500"></i> Also explore our <a href="#all-tools" class="text-indigo-600 font-semibold">full toolbox</a> below for image compression, ZIP creation, document conversion and more.</p>
     </div>
   </section>
 
-  <!-- ALL TOOLS GRID (expanded, beautiful, full width no gap) -->
+  <!-- ALL TOOLS GRID (expanded, beautiful) -->
   <section id="all-tools" class="py-20 bg-white w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
@@ -191,7 +176,7 @@
     </div>
   </section>
 
-  <!-- WHY CHOOSE US + SUPPORTED FORMATS (Rich section) -->
+  <!-- WHY CHOOSE US + SUPPORTED FORMATS -->
   <section class="py-20 bg-gradient-to-r from-indigo-50 to-purple-50 w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-800">Why Professionals Choose ToolForge</h2><p class="text-gray-600 mt-3">Privacy-first, lightning-fast, and absolutely free.</p></div>
@@ -204,7 +189,7 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS / SOCIAL PROOF -->
+  <!-- TESTIMONIALS -->
   <section class="py-20 bg-white w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"><h2 class="text-3xl md:text-4xl font-bold">Trusted by creators worldwide</h2><div class="grid md:grid-cols-3 gap-6 mt-12">
       <div class="testimonial-card bg-gray-50 p-6 rounded-2xl"><i class="fas fa-star text-yellow-400 mb-2"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><p class="mt-3 italic">"Best all-in-one toolkit I've ever used. The ZIP creator and image compressor saved me hours."</p><p class="font-semibold mt-4">— Sarah J., Freelance Designer</p></div>
@@ -221,7 +206,7 @@
     </div>
   </div>
 
-  <!-- FOOTER (expanded) -->
+  <!-- FOOTER -->
   <footer class="bg-gray-900 text-gray-300 pt-14 pb-6 w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-10">
       <div><div class="flex gap-2 items-center"><i class="fas fa-fire text-indigo-400 text-2xl"></i><span class="font-bold text-xl text-white">ToolForge</span></div><p class="text-sm mt-3 text-gray-400">Privacy-first, no-server toolkit for creators and developers. 15+ tools, 100% local.</p></div>
@@ -232,7 +217,7 @@
   </footer>
 
   <script>
-    // Modal + Tool logic (fully functional, same as before)
+    // Modal + Tool logic (full implementation)
     const modal = document.getElementById('toolModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalContent = document.getElementById('modalContent');
@@ -259,7 +244,9 @@
       try{ let clean=baseUrl.trim(); if(!clean.startsWith('http')) clean='https://'+clean; let sitemapUrl=clean.replace(/\/$/,'')+'/sitemap.xml'; let proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(sitemapUrl)}`; let res=await fetch(proxy); if(!res.ok) throw new Error(); let txt=await res.text(); let parser=new DOMParser(); let xml=parser.parseFromString(txt,'text/xml'); let locs=[...xml.querySelectorAll('url loc, sitemap loc')].map(el=>el.textContent); if(locs.length===0) throw new Error(); callback(`<div class="p-3 bg-green-50 rounded"><p>✅ ${locs.length} URLs</p><ul class="list-disc pl-5 max-h-64 overflow-auto text-xs">${locs.map(l=>`<li><a href="${l}" target="_blank" class="text-indigo-600 underline">${l}</a></li>`).join('')}</ul></div>`);
       } catch(e){ callback(`<div class="text-red-600 p-3 bg-red-50 rounded">❌ Sitemap not found. Ensure /sitemap.xml exists or try proxy.</div>`); }
     }
-    document.getElementById('generateSitemapBtn').onclick = async () => { let url=document.getElementById('sitemapUrl').value; if(!url) return notify("Enter URL",1); let loadDiv=document.getElementById('sitemapLoading'), resultDiv=document.getElementById('sitemapResult'); loadDiv.classList.remove('hidden'); resultDiv.classList.add('hidden'); await fetchSitemapGeneric(url, (html)=>{ loadDiv.classList.add('hidden'); resultDiv.innerHTML=html; resultDiv.classList.remove('hidden'); }); loadDiv.classList.add('hidden'); };
+    // Hero sitemap generator
+    document.getElementById('heroGenerateSitemapBtn').onclick = async () => { let url=document.getElementById('heroSitemapUrl').value; if(!url) return notify("Enter website URL",1); let loadDiv=document.getElementById('heroSitemapLoading'), resultDiv=document.getElementById('heroSitemapResult'); loadDiv.classList.remove('hidden'); resultDiv.classList.add('hidden'); await fetchSitemapGeneric(url, (html)=>{ loadDiv.classList.add('hidden'); resultDiv.innerHTML=html; resultDiv.classList.remove('hidden'); }); loadDiv.classList.add('hidden'); };
+    
     const toolMap = {
       imageCompressor:{title:"Image Compressor", content:`<input type="file" id="imgCompressFile" accept="image/*" class="border p-2 w-full rounded"><label class="block mt-3">Quality: <span id="qualityVal">80</span>%</label><input type="range" id="qualityRange" min="10" max="100" value="80" class="w-full"><button id="compressBtn" class="mt-4 bg-indigo-600 text-white w-full py-2 rounded-xl">Compress & Download</button>`},
       imageResizer:{title:"Image Resizer", content:`<input type="file" id="resizeFile" accept="image/*"><div class="flex gap-3 mt-3"><input type="number" id="resizeWidth" placeholder="Width px" class="border p-2 w-1/2 rounded"><input type="number" id="resizeHeight" placeholder="Height px" class="border p-2 w-1/2 rounded"></div><button id="resizeBtn" class="mt-4 bg-emerald-600 text-white w-full py-2 rounded-xl">Resize</button>`},
@@ -279,7 +266,6 @@
     document.querySelectorAll('[data-tool-nav]').forEach(btn=>btn.addEventListener('click',(e)=>{ e.preventDefault(); openToolByKey(btn.getAttribute('data-tool-nav')); }));
     const policyMap={privacy:"<h2 class='font-bold'>Privacy Policy</h2><p>No data leaves your browser. All processing local. We don't track or store files.</p>",terms:"<h2>Terms</h2><p>Free to use. No warranties. Use at your own discretion.</p>",faq:"<h2>FAQ</h2><p><strong>Is it really free?</strong> Yes, forever.<br><strong>Why sitemap fails?</strong> Some sites block CORS; try alternative URL.</p>",contact:"<h2>Contact</h2><p>support@toolforge.app | Twitter @toolforge</p>"};
     document.querySelectorAll('.footer-link').forEach(link=>link.addEventListener('click',(e)=>{e.preventDefault(); let p=link.getAttribute('data-policy'); if(policyMap[p]) openToolModal("Info",policyMap[p]); else openToolModal("Info","<p>Details soon.</p>"); }));
-    // Mobile menu toggle and submenus
     document.getElementById('mobileMenuBtn').onclick=()=>{document.getElementById('mobileMenu').classList.toggle('hidden');};
     document.querySelectorAll('.mobile-dropdown .toggle-sub').forEach(icon=>{ icon.addEventListener('click',(e)=>{ e.stopPropagation(); let sub=icon.closest('.mobile-dropdown').querySelector('.submenu'); sub.classList.toggle('hidden'); }); });
   </script>
