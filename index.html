@@ -3,271 +3,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="ToolForge - Ultimate Sitemap Generator & SaaS Toolkit: Image Tools, Document Converters, ZIP/Unzip, File Optimizer & more. 100% client-side, fast, secure.">
-  <meta name="keywords" content="sitemap generator, image compressor, image resizer, zip unzip, excel to csv, pdf tools, doc converter, seo tools">
+  <meta name="description" content="ToolForge - Ultimate Sitemap Generator & SEO Toolkit: Unlimited sitemap builder, image optimizer, document converter, ZIP tools, robots.txt generator, meta tag analyzer & 20+ free local tools.">
+  <meta name="keywords" content="unlimited sitemap generator, seo tools, image compressor, pdf to text, zip creator, robots.txt generator, meta tag analyzer, base64 encoder, json beautifier, qr code generator, free online tools">
   <meta name="author" content="ToolForge">
   <meta name="robots" content="index, follow">
-  <title>ToolForge | Ultimate Sitemap Generator & Toolkit</title>
+  <title>ToolForge | Unlimited Sitemap Generator & Professional Toolkit</title>
   <!-- Tailwind + Font Awesome + Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- JS Libraries for tools -->
+  <!-- JS Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
   <style>
     * { scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #fafcff; overflow-x: hidden; width: 100%; position: relative; }
-    .max-w-7xl, .container, section, footer, nav { max-width: 100%; overflow-x: hidden; }
-    /* Animated gradient hero */
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fafcff; overflow-x: hidden; }
+    /* Enhanced hero gradient */
     .hero-bg {
-      background: radial-gradient(ellipse at 20% 30%, #0f172a, #030712);
+      background: radial-gradient(circle at 10% 20%, #0a0f2a, #020617);
       position: relative;
-      overflow: hidden;
+      isolation: isolate;
     }
-    .hero-bg::before {
+    .hero-bg::after {
       content: "";
       position: absolute;
-      top: -30%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, rgba(0,0,0,0) 70%);
-      animation: slowDrift 25s infinite alternate;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(79,70,229,0.25) 0%, rgba(0,0,0,0) 70%);
       pointer-events: none;
     }
-    @keyframes slowDrift {
-      0% { transform: translate(0,0) scale(1); opacity: 0.5; }
-      100% { transform: translate(5%,5%) scale(1.1); opacity: 0.8; }
-    }
-    .glass-card {
-      background: rgba(255,255,255,0.94);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.5);
-      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.2);
+    .glass-card-premium {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 30px 45px -20px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.3);
     }
     .tool-card {
       transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       border: 1px solid #eef2ff;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(2px);
     }
     .tool-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 25px 35px -12px rgba(79,70,229,0.3);
-      border-color: #a5b4fc;
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 25px 35px -12px rgba(79,70,229,0.35);
+      border-color: #818cf8;
+      background: white;
     }
-    /* Desktop dropdown */
-    .dropdown { position: relative; display: inline-block; }
-    .dropdown-content {
-      visibility: hidden; opacity: 0; position: absolute;
-      background: rgba(255,255,255,0.98); backdrop-filter: blur(12px);
-      min-width: 240px; box-shadow: 0 20px 35px -8px rgba(0,0,0,0.15);
-      border-radius: 1rem; z-index: 50; transition: visibility 0.1s, opacity 0.2s;
-      top: 2.2rem; left: 0; border: 1px solid #eef2ff;
+    /* fixed z-index layers */
+    nav { z-index: 1000; }
+    #toolModal { z-index: 9999; }
+    .dropdown-content { z-index: 1100; }
+    .mobile-menu-panel { z-index: 1001; }
+    .sitemap-builder-table::-webkit-scrollbar { height: 6px; width: 6px; }
+    .sitemap-builder-table::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    .sitemap-builder-table::-webkit-scrollbar-thumb { background: #a5b4fc; border-radius: 10px; }
+    .tab-active {
+      background: #4f46e5;
+      color: white;
+      box-shadow: 0 4px 12px rgba(79,70,229,0.3);
     }
-    .dropdown:hover .dropdown-content { visibility: visible; opacity: 1; }
-    .dropdown-content button {
-      display: flex; align-items: center; gap: 12px; padding: 0.7rem 1.2rem;
-      width: 100%; text-align: left; font-size: 0.9rem; color: #1f2937;
-      transition: background 0.15s;
+    .tab-inactive {
+      background: #f3f4f6;
+      color: #374151;
     }
-    .dropdown-content button:hover { background: #f3f4f6; color: #4f46e5; }
-    @media (max-width: 768px) {
-      .dropdown-content { position: static; background: #f9fafb; border: none; box-shadow: none; display: none; padding-left: 0.5rem; margin-top: 0.25rem; }
-      .dropdown.active .dropdown-content { display: block; }
-      .dropdown:hover .dropdown-content { visibility: hidden; opacity: 0; }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .floating-icon { animation: float 6s ease-in-out infinite; }
-    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
-    .testimonial-card { transition: all 0.2s; }
-    .testimonial-card:hover { transform: scale(1.01); background: white; }
+    .fade-up { animation: fadeSlideUp 0.4s ease-out; }
   </style>
 </head>
 <body class="antialiased">
 
-  <!-- NAVBAR with Dropdowns -->
-  <nav class="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-gray-200/40 shadow-sm w-full">
+  <!-- Premium Navbar -->
+  <nav class="sticky top-0 bg-white/90 backdrop-blur-xl border-b border-gray-200/50 shadow-sm w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center gap-2">
-          <div class="bg-indigo-100 p-1.5 rounded-xl"><i class="fas fa-crown text-indigo-700 text-xl"></i></div>
+          <div class="bg-gradient-to-br from-indigo-600 to-purple-600 p-2 rounded-xl shadow-md"><i class="fas fa-fire text-white text-xl"></i></div>
           <span class="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-gray-800 to-indigo-700 bg-clip-text text-transparent">ToolForge</span>
         </div>
-        <div class="hidden md:flex items-center space-x-5 text-gray-700 font-medium">
-          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer"><i class="fas fa-image text-indigo-500"></i> Image <i class="fas fa-chevron-down text-xs"></i></span>
-            <div class="dropdown-content"><button data-tool-nav="imageCompressor"><i class="fas fa-compress"></i> Compress Image</button><button data-tool-nav="imageResizer"><i class="fas fa-expand-alt"></i> Resize Image</button><button data-tool-nav="imageConverter"><i class="fas fa-exchange-alt"></i> Convert Image</button><button data-tool-nav="webpConverter"><i class="fab fa-chrome"></i> To WebP</button><button data-tool-nav="fileSizeReducer"><i class="fas fa-weight-hanging"></i> Optimizer</button></div></div>
-          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer"><i class="fas fa-file-alt text-emerald-500"></i> Document <i class="fas fa-chevron-down text-xs"></i></span>
-            <div class="dropdown-content"><button data-tool-nav="docConverter"><i class="fas fa-file-word"></i> DOCX ↔ TXT/PDF</button><button data-tool-nav="pdfToText"><i class="fas fa-file-pdf"></i> PDF to Text</button><button data-tool-nav="excelConverter"><i class="fas fa-file-excel"></i> Excel to CSV</button></div></div>
-          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer"><i class="fas fa-folder-open text-amber-500"></i> File Utils <i class="fas fa-chevron-down text-xs"></i></span>
-            <div class="dropdown-content"><button data-tool-nav="zipCreator"><i class="fas fa-file-archive"></i> Create ZIP</button><button data-tool-nav="unzipTool"><i class="fas fa-folder-open"></i> Unzip Archive</button></div></div>
-          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer"><i class="fas fa-sitemap text-purple-500"></i> Sitemap <i class="fas fa-chevron-down text-xs"></i></span>
-            <div class="dropdown-content"><button data-tool-nav="sitemapHero"><i class="fas fa-globe"></i> Sitemap Generator</button><button data-tool-nav="sitemapTool"><i class="fas fa-search"></i> Sitemap Explorer</button></div></div>
+        <div class="hidden md:flex items-center space-x-6 text-gray-700 font-medium">
+          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer hover:text-indigo-600"><i class="fas fa-image text-indigo-500"></i> Image <i class="fas fa-chevron-down text-xs"></i></span>
+            <div class="dropdown-content rounded-xl"><button data-tool-nav="imageCompressor"><i class="fas fa-compress"></i> Compress</button><button data-tool-nav="imageResizer"><i class="fas fa-expand-alt"></i> Resize</button><button data-tool-nav="imageConverter"><i class="fas fa-exchange-alt"></i> Convert</button><button data-tool-nav="webpConverter"><i class="fab fa-chrome"></i> To WebP</button></div></div>
+          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer hover:text-indigo-600"><i class="fas fa-file-alt text-emerald-500"></i> Document <i class="fas fa-chevron-down text-xs"></i></span>
+            <div class="dropdown-content rounded-xl"><button data-tool-nav="docConverter"><i class="fas fa-file-word"></i> DOCX ↔ TXT/PDF</button><button data-tool-nav="pdfToText"><i class="fas fa-file-pdf"></i> PDF to Text</button><button data-tool-nav="excelConverter"><i class="fas fa-file-excel"></i> Excel to CSV</button></div></div>
+          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer hover:text-indigo-600"><i class="fas fa-folder-open text-amber-500"></i> Archive <i class="fas fa-chevron-down text-xs"></i></span>
+            <div class="dropdown-content rounded-xl"><button data-tool-nav="zipCreator"><i class="fas fa-file-archive"></i> Create ZIP</button><button data-tool-nav="unzipTool"><i class="fas fa-folder-open"></i> Unzip</button></div></div>
+          <div class="dropdown"><span class="flex items-center gap-1 cursor-pointer hover:text-indigo-600"><i class="fas fa-sitemap text-purple-500"></i> Sitemap <i class="fas fa-chevron-down text-xs"></i></span>
+            <div class="dropdown-content rounded-xl"><button data-tool-nav="sitemapBuilder"><i class="fas fa-infinity"></i> Unlimited Builder</button><button data-tool-nav="sitemapFetcher"><i class="fas fa-globe"></i> Fetch Sitemap</button></div></div>
           <a href="#all-tools" class="hover:text-indigo-600 transition">All Tools</a>
         </div>
         <div class="md:hidden"><button id="mobileMenuBtn" class="text-gray-700 text-2xl"><i class="fas fa-bars"></i></button></div>
       </div>
-      <!-- Mobile menu -->
-      <div id="mobileMenu" class="md:hidden hidden pb-5 space-y-3 bg-white/95 rounded-2xl my-2 p-4 shadow-lg border w-full">
-        <div class="mobile-dropdown"><div class="font-bold text-indigo-700 flex justify-between items-center"><span><i class="fas fa-image mr-2"></i>Image Tools</span><i class="fas fa-chevron-down text-xs toggle-sub"></i></div><div class="submenu hidden pl-4 space-y-2 mt-2"><button data-tool-nav="imageCompressor" class="block w-full text-left py-1">📸 Compress</button><button data-tool-nav="imageResizer" class="block w-full text-left py-1">📏 Resize</button><button data-tool-nav="imageConverter" class="block w-full text-left py-1">🔄 Convert</button><button data-tool-nav="webpConverter" class="block w-full text-left py-1">🌐 To WebP</button></div></div>
-        <div class="mobile-dropdown"><div class="font-bold text-emerald-700 flex justify-between items-center"><span><i class="fas fa-file-alt mr-2"></i>Document Tools</span><i class="fas fa-chevron-down text-xs toggle-sub"></i></div><div class="submenu hidden pl-4 space-y-2 mt-2"><button data-tool-nav="docConverter" class="block w-full text-left py-1">📄 DOCX/TXT/PDF</button><button data-tool-nav="pdfToText" class="block w-full text-left py-1">📑 PDF → Text</button><button data-tool-nav="excelConverter" class="block w-full text-left py-1">📊 Excel → CSV</button></div></div>
-        <div class="mobile-dropdown"><div class="font-bold text-amber-700 flex justify-between items-center"><span><i class="fas fa-folder-open mr-2"></i>File Utilities</span><i class="fas fa-chevron-down text-xs toggle-sub"></i></div><div class="submenu hidden pl-4 space-y-2 mt-2"><button data-tool-nav="zipCreator" class="block w-full text-left py-1">🗜️ Create ZIP</button><button data-tool-nav="unzipTool" class="block w-full text-left py-1">📂 Unzip Archive</button></div></div>
-        <div class="mobile-dropdown"><div class="font-bold text-purple-700 flex justify-between items-center"><span><i class="fas fa-sitemap mr-2"></i>Sitemap Tools</span><i class="fas fa-chevron-down text-xs toggle-sub"></i></div><div class="submenu hidden pl-4 space-y-2 mt-2"><button data-tool-nav="sitemapHero" class="block w-full text-left py-1">🌍 Sitemap Generator</button><button data-tool-nav="sitemapTool" class="block w-full text-left py-1">🔍 Sitemap Explorer</button></div></div>
-        <a href="#all-tools" class="block py-2 font-semibold text-indigo-600">✨ Browse All Tools</a>
+      <div id="mobileMenu" class="md:hidden hidden pb-5 bg-white/95 rounded-2xl my-2 p-4 shadow-xl border w-full mobile-menu-panel">
+        <div class="space-y-3"><div class="font-bold text-indigo-700"><i class="fas fa-sitemap mr-2"></i>Sitemap Tools</div><button data-tool-nav="sitemapBuilder" class="block w-full text-left py-1">✨ Unlimited Builder</button><button data-tool-nav="sitemapFetcher" class="block w-full text-left py-1">🌍 Fetch Sitemap</button>
+        <div class="font-bold text-indigo-700 mt-2"><i class="fas fa-image mr-2"></i>Image Tools</div><button data-tool-nav="imageCompressor" class="block py-1">Compress</button><button data-tool-nav="imageResizer">Resize</button><button data-tool-nav="webpConverter">WebP</button>
+        <div class="font-bold text-emerald-700">Document</div><button data-tool-nav="docConverter">DOCX/TXT</button><button data-tool-nav="pdfToText">PDF to Text</button>
+        <a href="#all-tools" class="block font-semibold text-indigo-600 mt-2">✨ All Tools</a></div>
       </div>
     </div>
   </nav>
 
-  <!-- HERO SECTION with SITEMAP GENERATOR as primary focus -->
+  <!-- HERO: Ultimate Sitemap Generator (Unlimited + Fetch) -->
   <section class="hero-bg text-white py-20 md:py-24 relative w-full">
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 bg-indigo-500/20 backdrop-blur-sm rounded-full px-4 py-1.5 text-indigo-200 text-sm mb-6"><i class="fas fa-bolt"></i> <span>100% Local · Zero Uploads · Free Forever</span></div>
-        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">The <span class="text-indigo-300">Ultimate Sitemap</span> & Creator Toolkit</h1>
-        <p class="text-xl text-gray-200 mt-6 max-w-2xl mx-auto">Generate sitemaps instantly · Compress, resize, convert images · Zip/Unzip files · Extract PDFs — all in your browser, no registration.</p>
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 bg-indigo-500/30 backdrop-blur-sm rounded-full px-5 py-2 text-indigo-100 text-sm mb-6 border border-indigo-400/30"><i class="fas fa-bolt"></i> <span>⚡ Unlimited Sitemaps · 100% Local · SEO Powerhouse</span></div>
+        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight">Generate <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">Unlimited Sitemaps</span> Instantly</h1>
+        <p class="text-xl text-gray-200 mt-6 max-w-2xl mx-auto">Build XML sitemaps with unlimited URLs, fetch existing sitemaps, and access 20+ professional tools — all in your browser, zero uploads.</p>
         
-        <!-- PRIMARY SITEMAP GENERATOR WIDGET in hero -->
-        <div class="glass-card rounded-2xl p-6 md:p-8 mt-10 text-gray-800 shadow-2xl max-w-2xl mx-auto">
-          <div class="flex items-center justify-center gap-3 mb-4"><i class="fas fa-sitemap text-3xl text-indigo-700"></i><h2 class="text-2xl font-bold">Sitemap Generator</h2></div>
-          <p class="text-gray-600 mb-4">Enter any website URL — fetch sitemap.xml for SEO audits.</p>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <input type="url" id="heroSitemapUrl" placeholder="https://example.com" class="flex-1 px-5 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-400 outline-none">
-            <button id="heroGenerateSitemapBtn" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-7 py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2"><i class="fas fa-arrow-right"></i> Generate</button>
+        <!-- Dual Mode Sitemap Widget (Premium) -->
+        <div class="glass-card-premium rounded-2xl p-6 md:p-8 mt-12 text-gray-800 shadow-2xl max-w-3xl mx-auto">
+          <div class="flex flex-wrap gap-3 border-b pb-3 mb-5">
+            <button id="tabBuilderBtn" class="tab-active px-5 py-2 rounded-xl font-semibold transition flex items-center gap-2"><i class="fas fa-infinity"></i> Unlimited Builder</button>
+            <button id="tabFetcherBtn" class="tab-inactive px-5 py-2 rounded-xl font-semibold transition flex items-center gap-2"><i class="fas fa-download"></i> Fetch Sitemap</button>
           </div>
-          <div id="heroSitemapResult" class="mt-5 max-h-60 overflow-y-auto bg-gray-50 rounded-xl p-3 text-sm hidden border"></div>
-          <div id="heroSitemapLoading" class="hidden text-indigo-600 mt-3 text-center"><i class="fas fa-spinner fa-spin"></i> Fetching sitemap...</div>
+          <!-- BUILDER PANEL -->
+          <div id="builderPanel">
+            <p class="text-gray-600 mb-3 text-sm">Add unlimited URLs, set changefreq & priority → generate sitemap.xml</p>
+            <div class="flex flex-col sm:flex-row gap-3 mb-4">
+              <input type="text" id="newUrlInput" placeholder="https://example.com/page" class="flex-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-400 outline-none">
+              <select id="changefreqSelect" class="px-3 py-2 border rounded-xl"><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="yearly">Yearly</option></select>
+              <input type="text" id="priorityInput" placeholder="0.8" value="0.8" class="w-24 px-3 py-2 border rounded-xl">
+              <button id="addUrlBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl transition"><i class="fas fa-plus"></i> Add</button>
+            </div>
+            <div class="max-h-64 overflow-auto border rounded-xl bg-gray-50 p-2 sitemap-builder-table">
+              <table class="w-full text-sm" id="urlTable"><thead><tr class="border-b"><th class="text-left">URL</th><th>Freq</th><th>Priority</th><th class="w-10"></th></tr></thead><tbody id="urlTableBody"></tbody></table>
+            </div>
+            <div class="flex gap-3 mt-5">
+              <button id="generateSitemapBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-xl transition flex-1"><i class="fas fa-file-code"></i> Generate XML & Download</button>
+              <button id="resetBuilderBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 rounded-xl transition"><i class="fas fa-trash-alt"></i> Clear All</button>
+            </div>
+            <div id="builderMessage" class="text-xs text-center mt-3 text-gray-500"></div>
+          </div>
+          <!-- FETCHER PANEL (hidden initially) -->
+          <div id="fetcherPanel" class="hidden">
+            <p class="text-gray-600 mb-3">Enter domain to fetch existing sitemap.xml (via proxy)</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input type="url" id="heroSitemapUrl" placeholder="https://example.com" class="flex-1 px-5 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-400 outline-none">
+              <button id="heroGenerateSitemapBtn" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-7 py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2"><i class="fas fa-arrow-right"></i> Fetch Sitemap</button>
+            </div>
+            <div id="heroSitemapResult" class="mt-5 max-h-60 overflow-y-auto bg-gray-50 rounded-xl p-3 text-sm hidden border"></div>
+            <div id="heroSitemapLoading" class="hidden text-indigo-600 mt-3 text-center"><i class="fas fa-spinner fa-spin"></i> Fetching...</div>
+          </div>
         </div>
-        
-        <div class="flex flex-wrap justify-center gap-6 mt-10 text-sm text-gray-300"><span><i class="fas fa-check-circle text-green-400"></i> 15+ Tools</span><span><i class="fas fa-shield-alt text-indigo-300"></i> Privacy First</span><span><i class="fas fa-tachometer-alt text-amber-300"></i> Instant</span></div>
+        <div class="flex flex-wrap justify-center gap-5 mt-8 text-sm text-gray-300"><span><i class="fas fa-check-circle text-green-400"></i> Unlimited URLs</span><span><i class="fas fa-shield-alt text-indigo-300"></i> Zero Uploads</span><span><i class="fas fa-infinity text-amber-300"></i> 100% Free</span><span><i class="fas fa-search"></i> SEO Optimized</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ADDITIONAL SITEMAP INFO CARD (optional, but kept for completeness) -->
-  <section class="py-8 bg-white w-full">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <p class="text-gray-500"><i class="fas fa-info-circle text-indigo-500"></i> Also explore our <a href="#all-tools" class="text-indigo-600 font-semibold">full toolbox</a> below for image compression, ZIP creation, document conversion and more.</p>
-    </div>
-  </section>
-
-  <!-- ALL TOOLS GRID (expanded, beautiful) -->
+  <!-- ALL TOOLS GRID (expanded with 20+ tools) -->
   <section id="all-tools" class="py-20 bg-white w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
-        <span class="text-indigo-600 font-semibold tracking-wide text-sm uppercase">Complete Toolbox</span>
+      <div class="text-center mb-14"><span class="text-indigo-600 font-semibold tracking-wide uppercase text-sm">Pro Toolbox</span>
         <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mt-2">Everything <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">You Need</span></h2>
-        <p class="text-gray-500 max-w-2xl mx-auto mt-4">Professional-grade tools for images, documents, archives, and SEO — all running locally on your device.</p>
+        <p class="text-gray-500 max-w-2xl mx-auto mt-4">20+ professional tools for SEO, images, documents, archives, and development — 100% client-side.</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="imageCompressor"><div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center"><i class="fas fa-compress-alt text-2xl text-indigo-700"></i></div><h3 class="font-bold text-xl mt-4">Image Compressor</h3><p class="text-gray-500 text-sm">Reduce size up to 80% lossless</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="imageResizer"><div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center"><i class="fas fa-expand-alt text-2xl text-emerald-700"></i></div><h3 class="font-bold text-xl mt-4">Image Resizer</h3><p class="text-gray-500 text-sm">Scale by pixels or percentage</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="imageConverter"><div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center"><i class="fas fa-exchange-alt text-2xl text-amber-700"></i></div><h3 class="font-bold text-xl mt-4">Image Converter</h3><p class="text-gray-500 text-sm">PNG, JPEG, WebP, BMP</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="webpConverter"><div class="w-14 h-14 bg-sky-100 rounded-2xl flex items-center justify-center"><i class="fab fa-chrome text-2xl text-sky-700"></i></div><h3 class="font-bold text-xl mt-4">Convert to WebP</h3><p class="text-gray-500 text-sm">Next-gen image format</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="zipCreator"><div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center"><i class="fas fa-file-archive text-2xl text-purple-700"></i></div><h3 class="font-bold text-xl mt-4">ZIP Creator</h3><p class="text-gray-500 text-sm">Compress multiple files</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="unzipTool"><div class="w-14 h-14 bg-rose-100 rounded-2xl flex items-center justify-center"><i class="fas fa-folder-open text-2xl text-rose-700"></i></div><h3 class="font-bold text-xl mt-4">Unzip Archive</h3><p class="text-gray-500 text-sm">Extract ZIP files instantly</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="excelConverter"><div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center"><i class="fas fa-file-excel text-2xl text-green-700"></i></div><h3 class="font-bold text-xl mt-4">Excel to CSV</h3><p class="text-gray-500 text-sm">Convert XLSX to CSV/TXT</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="pdfToText"><div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center"><i class="fas fa-file-pdf text-2xl text-orange-700"></i></div><h3 class="font-bold text-xl mt-4">PDF to Text</h3><p class="text-gray-500 text-sm">Extract readable content</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="docConverter"><div class="w-14 h-14 bg-teal-100 rounded-2xl flex items-center justify-center"><i class="fas fa-file-alt text-2xl text-teal-700"></i></div><h3 class="font-bold text-xl mt-4">Document Converter</h3><p class="text-gray-500 text-sm">DOCX ↔ TXT / TXT → PDF</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="fileSizeReducer"><div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center"><i class="fas fa-weight-hanging text-2xl text-indigo-700"></i></div><h3 class="font-bold text-xl mt-4">File Optimizer</h3><p class="text-gray-500 text-sm">Smart image size reduction</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="sitemapTool"><div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center"><i class="fas fa-sitemap text-2xl text-purple-700"></i></div><h3 class="font-bold text-xl mt-4">Sitemap Explorer</h3><p class="text-gray-500 text-sm">Parse and list all URLs</p></div>
-        <div class="tool-card bg-gray-50 rounded-2xl p-6 cursor-pointer" data-tool="sitemapHero"><div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center"><i class="fas fa-globe text-2xl text-amber-700"></i></div><h3 class="font-bold text-xl mt-4">SEO Sitemap Gen</h3><p class="text-gray-500 text-sm">Instant sitemap fetcher</p></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Sitemap tools -->
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="sitemapBuilder"><div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center"><i class="fas fa-infinity text-2xl text-indigo-700"></i></div><h3 class="font-bold text-lg mt-3">Unlimited Sitemap Builder</h3><p class="text-gray-500 text-xs">Create XML with unlimited URLs</p></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="sitemapFetcher"><div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center"><i class="fas fa-globe text-2xl text-purple-700"></i></div><h3 class="font-bold text-lg mt-3">Sitemap Fetcher</h3><p class="text-gray-500 text-xs">Extract existing sitemap URLs</p></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="robotsGenerator"><div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center"><i class="fas fa-robot text-2xl text-blue-700"></i></div><h3 class="font-bold text-lg mt-3">Robots.txt Generator</h3><p class="text-gray-500 text-xs">Create custom robots.txt</p></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="metaGenerator"><div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center"><i class="fas fa-tags text-2xl text-cyan-700"></i></div><h3 class="font-bold text-lg mt-3">Meta Tag Generator</h3><p class="text-gray-500 text-xs">SEO meta tags preview</p></div>
+        <!-- Existing tools -->
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="imageCompressor"><div class="w-12 h-12 bg-indigo-100 rounded-xl"><i class="fas fa-compress-alt text-2xl text-indigo-700 flex justify-center items-center h-full"></i></div><h3 class="font-bold text-lg mt-3">Image Compressor</h3><p class="text-gray-500 text-xs">Lossless & quality control</p></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="imageResizer"><div class="w-12 h-12 bg-emerald-100 rounded-xl"><i class="fas fa-expand-alt text-2xl text-emerald-700 flex justify-center h-full items-center"></i></div><h3 class="font-bold text-lg mt-3">Image Resizer</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="webpConverter"><div class="w-12 h-12 bg-sky-100 rounded-xl"><i class="fab fa-chrome text-2xl text-sky-700 flex justify-center items-center h-full"></i></div><h3 class="font-bold text-lg mt-3">Convert to WebP</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="zipCreator"><div class="w-12 h-12 bg-purple-100 rounded-xl"><i class="fas fa-file-archive text-2xl text-purple-700"></i></div><h3 class="font-bold text-lg mt-3">ZIP Creator</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="unzipTool"><div class="w-12 h-12 bg-rose-100 rounded-xl"><i class="fas fa-folder-open text-2xl text-rose-700"></i></div><h3 class="font-bold text-lg mt-3">Unzip Archive</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="excelConverter"><div class="w-12 h-12 bg-green-100 rounded-xl"><i class="fas fa-file-excel text-2xl text-green-700"></i></div><h3 class="font-bold text-lg mt-3">Excel to CSV</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="pdfToText"><div class="w-12 h-12 bg-orange-100 rounded-xl"><i class="fas fa-file-pdf text-2xl text-orange-700"></i></div><h3 class="font-bold text-lg mt-3">PDF to Text</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="docConverter"><div class="w-12 h-12 bg-teal-100 rounded-xl"><i class="fas fa-file-alt text-2xl text-teal-700"></i></div><h3 class="font-bold text-lg mt-3">Document Converter</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="qrGenerator"><div class="w-12 h-12 bg-pink-100 rounded-xl"><i class="fas fa-qrcode text-2xl text-pink-700"></i></div><h3 class="font-bold text-lg mt-3">QR Code Generator</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="base64Tool"><div class="w-12 h-12 bg-gray-200 rounded-xl"><i class="fas fa-code text-2xl text-gray-700"></i></div><h3 class="font-bold text-lg mt-3">Base64 Encoder/Decoder</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="jsonTool"><div class="w-12 h-12 bg-yellow-100 rounded-xl"><i class="fas fa-brackets-curly text-2xl text-yellow-700"></i></div><h3 class="font-bold text-lg mt-3">JSON Beautifier</h3></div>
+        <div class="tool-card rounded-2xl p-5 cursor-pointer" data-tool="loremGen"><div class="w-12 h-12 bg-stone-100 rounded-xl"><i class="fas fa-paragraph text-2xl text-stone-700"></i></div><h3 class="font-bold text-lg mt-3">Lorem Ipsum</h3></div>
       </div>
     </div>
   </section>
 
-  <!-- WHY CHOOSE US + SUPPORTED FORMATS -->
+  <!-- Why Choose -->
   <section class="py-20 bg-gradient-to-r from-indigo-50 to-purple-50 w-full">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-800">Why Professionals Choose ToolForge</h2><p class="text-gray-600 mt-3">Privacy-first, lightning-fast, and absolutely free.</p></div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-shield-alt text-4xl text-indigo-500 mb-4"></i><h3 class="text-xl font-bold">100% Client-Side</h3><p class="text-gray-500">Your files never leave your device — no uploads, no servers, complete privacy.</p></div>
-        <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-bolt text-4xl text-amber-500 mb-4"></i><h3 class="text-xl font-bold">Blazing Fast</h3><p class="text-gray-500">All processing happens locally in milliseconds. No waiting for uploads.</p></div>
-        <div class="bg-white p-6 rounded-2xl shadow-sm"><i class="fas fa-infinity text-4xl text-emerald-500 mb-4"></i><h3 class="text-xl font-bold">Unlimited Free</h3><p class="text-gray-500">No watermarks, no file size limits, no registration — use as much as you want.</p></div>
-      </div>
-      <div class="mt-16 text-center"><h3 class="text-2xl font-semibold">Supported Formats</h3><div class="flex flex-wrap justify-center gap-4 mt-6"><span class="bg-white px-4 py-2 rounded-full shadow-sm"><i class="fab fa-python text-gray-600"></i> PNG, JPEG, WebP, BMP</span><span class="bg-white px-4 py-2 rounded-full shadow-sm"><i class="fas fa-file-pdf"></i> PDF, DOCX, TXT</span><span class="bg-white px-4 py-2 rounded-full shadow-sm"><i class="fas fa-file-excel"></i> XLSX, CSV</span><span class="bg-white px-4 py-2 rounded-full shadow-sm"><i class="fas fa-file-archive"></i> ZIP</span></div></div>
+    <div class="max-w-7xl mx-auto px-4 text-center"><h2 class="text-3xl md:text-4xl font-bold">Unlimited Sitemaps, Zero Limits</h2><p class="mt-4 text-gray-600 max-w-2xl mx-auto">Generate sitemaps with thousands of URLs, edit priority, changefreq, and export valid XML — all locally.</p>
+      <div class="grid md:grid-cols-3 gap-8 mt-12"><div class="bg-white p-6 rounded-2xl shadow"><i class="fas fa-chart-line text-4xl text-indigo-500"></i><h3 class="font-bold text-xl mt-3">SEO Mastery</h3><p class="text-gray-500">Boost indexing with dynamic sitemaps.</p></div>
+      <div class="bg-white p-6 rounded-2xl shadow"><i class="fas fa-lock text-4xl text-indigo-500"></i><h3 class="font-bold text-xl mt-3">Privacy First</h3><p class="text-gray-500">No server uploads — total confidentiality.</p></div>
+      <div class="bg-white p-6 rounded-2xl shadow"><i class="fas fa-infinity text-4xl text-indigo-500"></i><h3 class="font-bold text-xl mt-3">Unlimited Use</h3><p class="text-gray-500">No registration, no watermarks.</p></div></div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="py-20 bg-white w-full">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"><h2 class="text-3xl md:text-4xl font-bold">Trusted by creators worldwide</h2><div class="grid md:grid-cols-3 gap-6 mt-12">
-      <div class="testimonial-card bg-gray-50 p-6 rounded-2xl"><i class="fas fa-star text-yellow-400 mb-2"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><p class="mt-3 italic">"Best all-in-one toolkit I've ever used. The ZIP creator and image compressor saved me hours."</p><p class="font-semibold mt-4">— Sarah J., Freelance Designer</p></div>
-      <div class="testimonial-card bg-gray-50 p-6 rounded-2xl"><i class="fas fa-star text-yellow-400 mb-2"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><p class="mt-3 italic">"Sitemap generator is incredibly accurate. And everything runs locally — no privacy concerns."</p><p class="font-semibold mt-4">— Mark T., SEO Specialist</p></div>
-      <div class="testimonial-card bg-gray-50 p-6 rounded-2xl"><i class="fas fa-star text-yellow-400 mb-2"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><i class="fas fa-star text-yellow-400"></i><p class="mt-3 italic">"The PDF to text tool is a lifesaver for my research work. Fast and reliable."</p><p class="font-semibold mt-4">— Dr. Emily R., Academic</p></div>
-    </div></div>
-  </section>
-
-  <!-- MODAL (dynamic for all tools) -->
-  <div id="toolModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 invisible opacity-0 transition-all duration-300 p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-indigo-100">
-      <div class="sticky top-0 bg-white/95 border-b px-6 py-4 flex justify-between items-center"><h3 id="modalTitle" class="text-2xl font-bold flex gap-2"><i class="fas fa-tools text-indigo-500"></i> Tool</h3><button id="closeModalBtn" class="text-3xl text-gray-500 hover:text-gray-800">&times;</button></div>
-      <div id="modalContent" class="p-6"></div>
-    </div>
+  <!-- Modal Container -->
+  <div id="toolModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center invisible opacity-0 transition-all duration-300 p-4" style="z-index: 9999;">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-indigo-100"><div class="sticky top-0 bg-white/95 border-b px-6 py-4 flex justify-between items-center"><h3 id="modalTitle" class="text-2xl font-bold flex gap-2"><i class="fas fa-tools text-indigo-500"></i> Tool</h3><button id="closeModalBtn" class="text-3xl text-gray-500 hover:text-gray-800">&times;</button></div><div id="modalContent" class="p-6"></div></div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="bg-gray-900 text-gray-300 pt-14 pb-6 w-full">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-10">
-      <div><div class="flex gap-2 items-center"><i class="fas fa-fire text-indigo-400 text-2xl"></i><span class="font-bold text-xl text-white">ToolForge</span></div><p class="text-sm mt-3 text-gray-400">Privacy-first, no-server toolkit for creators and developers. 15+ tools, 100% local.</p></div>
-      <div><h4 class="font-semibold text-white">Explore</h4><ul class="text-sm space-y-2 mt-2"><li><button data-tool-nav="imageCompressor" class="hover:text-indigo-400">Image Compressor</button></li><li><button data-tool-nav="zipCreator" class="hover:text-indigo-400">Create ZIP</button></li><li><button data-tool-nav="excelConverter" class="hover:text-indigo-400">Excel to CSV</button></li></ul></div>
-      <div><h4 class="font-semibold text-white">Legal</h4><ul class="text-sm space-y-2 mt-2"><li><a href="#" class="footer-link" data-policy="privacy">Privacy Policy</a></li><li><a href="#" class="footer-link" data-policy="terms">Terms of Use</a></li><li><a href="#" class="footer-link" data-policy="faq">FAQ</a></li><li><a href="#" class="footer-link" data-policy="contact">Contact</a></li></ul></div>
-      <div><h4 class="font-semibold text-white">Follow</h4><div class="flex space-x-5 text-xl mt-2"><i class="fab fa-twitter hover:text-indigo-400 cursor-pointer"></i><i class="fab fa-github hover:text-indigo-400 cursor-pointer"></i><i class="fab fa-linkedin hover:text-indigo-400 cursor-pointer"></i></div><p class="text-xs text-gray-500 mt-5">© 2025 ToolForge — All rights reserved.</p></div>
-    </div>
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-10"><div><div class="flex gap-2"><i class="fas fa-fire text-indigo-400 text-2xl"></i><span class="font-bold text-xl text-white">ToolForge</span></div><p class="text-sm mt-3 text-gray-400">Unlimited sitemap builder & professional toolkit — 20+ tools, zero compromises.</p></div>
+    <div><h4 class="font-semibold text-white">Sitemap</h4><ul class="text-sm space-y-2 mt-2"><li><button data-tool-nav="sitemapBuilder" class="hover:text-indigo-400">Unlimited Builder</button></li><li><button data-tool-nav="sitemapFetcher" class="hover:text-indigo-400">Sitemap Fetcher</button></li></ul></div>
+    <div><h4 class="font-semibold text-white">Resources</h4><ul class="text-sm"><li><button class="footer-link" data-policy="privacy">Privacy</button></li><li><button class="footer-link" data-policy="terms">Terms</button></li></ul></div>
+    <div><p class="text-xs text-gray-500">© 2025 ToolForge — Ultimate SEO Toolkit</p></div></div>
   </footer>
 
   <script>
-    // Modal + Tool logic (full implementation)
-    const modal = document.getElementById('toolModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalContent = document.getElementById('modalContent');
+    // DOM ready
+    const modal = document.getElementById('toolModal'), modalTitle = document.getElementById('modalTitle'), modalContent = document.getElementById('modalContent');
     const closeModal = () => { modal.classList.add('invisible','opacity-0'); };
     document.getElementById('closeModalBtn').onclick = closeModal;
     modal.onclick = (e) => { if(e.target===modal) closeModal(); };
-    function notify(msg, isErr=false) { let d=document.createElement('div'); d.className=`fixed bottom-6 left-1/2 transform -translate-x-1/2 px-5 py-3 rounded-full text-white font-semibold z-[100] shadow-lg ${isErr?'bg-red-600':'bg-green-700'}`; d.innerText=msg; document.body.appendChild(d); setTimeout(()=>d.remove(),3000); }
-    function openToolModal(title, html) { modalTitle.innerHTML = `<i class="fas fa-magic mr-2"></i> ${title}`; modalContent.innerHTML = html; modal.classList.remove('invisible','opacity-0'); attachModalEvents(); }
-    function attachModalEvents() {
-      if(document.getElementById('compressBtn')) document.getElementById('compressBtn').onclick = async () => { let f=document.getElementById('imgCompressFile').files[0], q=document.getElementById('qualityRange').value; if(!f) return notify("Select image",1); let img=new Image(); img.src=URL.createObjectURL(f); await new Promise(r=>img.onload=r); let c=document.createElement('canvas'); c.width=img.width; c.height=img.height; c.getContext('2d').drawImage(img,0,0); c.toBlob(b=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`compressed_${f.name}`; a.click(); notify("Compressed!"); }, f.type, q/100); };
-      if(document.getElementById('qualityRange')) document.getElementById('qualityRange').oninput=()=>document.getElementById('qualityVal').innerText=document.getElementById('qualityRange').value;
-      if(document.getElementById('convertImgBtn')) document.getElementById('convertImgBtn').onclick = async () => { let f=document.getElementById('imgConvertFile').files[0], fmt=document.getElementById('targetFormat').value; if(!f) return; let img=new Image(); img.src=URL.createObjectURL(f); await new Promise(r=>img.onload=r); let c=document.createElement('canvas'); c.width=img.width; c.height=img.height; c.getContext('2d').drawImage(img,0,0); let mime=`image/${fmt==='jpg'?'jpeg':fmt}`; c.toBlob(b=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`converted.${fmt==='jpg'?'jpeg':fmt}`; a.click(); notify(`Converted to ${fmt}`); }, mime,0.92); };
-      if(document.getElementById('resizeBtn')) document.getElementById('resizeBtn').onclick = async () => { let f=document.getElementById('resizeFile').files[0], w=parseInt(document.getElementById('resizeWidth').value), h=parseInt(document.getElementById('resizeHeight').value); if(!f||isNaN(w)||isNaN(h)) return notify("Invalid"); let img=new Image(); img.src=URL.createObjectURL(f); await new Promise(r=>img.onload=r); let c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); c.toBlob(b=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`resized_${f.name}`; a.click(); notify("Resized"); }, f.type); };
-      if(document.getElementById('docConvertBtn')) document.getElementById('docConvertBtn').onclick = async () => { let f=document.getElementById('docFile').files[0], type=document.getElementById('docType').value; if(!f) return; if(type==='docx2txt') { let buf=await f.arrayBuffer(); mammoth.extractRawText({arrayBuffer:buf}).then(r=>{ let blob=new Blob([r.value],{type:'text/plain'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=f.name.replace(/\.docx$/i,'.txt'); a.click(); notify("DOCX to TXT"); }).catch(()=>notify("err",1)); } else if(type==='txt2pdf') { let text=await f.text(); let {jsPDF}=window.jspdf; let doc=new jsPDF(); doc.text(text.slice(0,8000),10,10); doc.save('converted.pdf'); notify("TXT to PDF"); } };
-      if(document.getElementById('pdfToTextBtn')) document.getElementById('pdfToTextBtn').onclick = async () => { let f=document.getElementById('pdfFile').files[0]; if(!f) return; let buf=await f.arrayBuffer(); let pdf=await pdfjsLib.getDocument({data:buf}).promise; let txt=''; for(let i=1;i<=pdf.numPages;i++){ let page=await pdf.getPage(i); let content=await page.getTextContent(); txt+=content.items.map(it=>it.str).join(' ')+'\n'; } let blob=new Blob([txt],{type:'text/plain'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=f.name.replace('.pdf','.txt'); a.click(); notify("PDF extracted"); };
-      if(document.getElementById('excelToCsvBtn')) document.getElementById('excelToCsvBtn').onclick = async () => { let f=document.getElementById('excelFile').files[0]; if(!f) return; let data=await f.arrayBuffer(); let workbook=XLSX.read(data); let sheet=workbook.Sheets[workbook.SheetNames[0]]; let csv=XLSX.utils.sheet_to_csv(sheet); let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=f.name.replace(/\.xlsx?$/i,'.csv'); a.click(); notify("Excel → CSV"); };
-      if(document.getElementById('zipCreateBtn')) document.getElementById('zipCreateBtn').onclick = async () => { let filesInput=document.getElementById('zipFiles').files; if(filesInput.length===0) return notify("Select files",1); let zip=new JSZip(); for(let file of filesInput) zip.file(file.name, file); let blob=await zip.generateAsync({type:"blob"}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="archive.zip"; a.click(); notify("ZIP created"); };
-      if(document.getElementById('unzipBtn')) document.getElementById('unzipBtn').onclick = async () => { let file=document.getElementById('unzipFile').files[0]; if(!file) return; let zip=await JSZip.loadAsync(file); let outDiv=document.getElementById('unzipOutput'); outDiv.innerHTML="<div class='text-indigo-600'>Extracting...</div>"; let fileList=[]; for(let relPath of Object.keys(zip.files)){ let content=await zip.files[relPath].async("blob"); let url=URL.createObjectURL(content); fileList.push(`<div class='flex justify-between border-b py-2'><span>${relPath}</span><a href='${url}' download='${relPath}' class='text-indigo-600'>Download</a></div>`); } outDiv.innerHTML=fileList.join('') || "<p>No files</p>"; notify("Archive loaded"); };
-      if(document.getElementById('webpConvertBtn')) document.getElementById('webpConvertBtn').onclick = async () => { let f=document.getElementById('webpFile').files[0]; if(!f) return; let img=new Image(); img.src=URL.createObjectURL(f); await new Promise(r=>img.onload=r); let c=document.createElement('canvas'); c.width=img.width; c.height=img.height; c.getContext('2d').drawImage(img,0,0); c.toBlob(b=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=f.name.replace(/\.[^/.]+$/,'')+'.webp'; a.click(); notify("Converted to WebP"); }, 'image/webp',0.85); };
-      if(document.getElementById('fileReduceBtn')) document.getElementById('fileReduceBtn').onclick = async () => { let f=document.getElementById('reduceFile').files[0]; if(!f||!f.type.startsWith('image/')) return notify("Select image",1); let img=new Image(); img.src=URL.createObjectURL(f); await new Promise(r=>img.onload=r); let c=document.createElement('canvas'); c.width=img.width; c.height=img.height; c.getContext('2d').drawImage(img,0,0); c.toBlob(b=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`optimized_${f.name}`; a.click(); notify("Optimized"); }, f.type,0.7); };
-      if(document.getElementById('modalSitemapBtn')) document.getElementById('modalSitemapBtn').onclick = async () => { let url=document.getElementById('modalSitemapUrl').value; if(!url) return notify("Enter URL",1); await fetchSitemapGeneric(url, (html)=>{ document.getElementById('modalSitemapResult').innerHTML=html; document.getElementById('modalSitemapResult').classList.remove('hidden'); }); };
-    }
-    async function fetchSitemapGeneric(baseUrl, callback) {
-      try{ let clean=baseUrl.trim(); if(!clean.startsWith('http')) clean='https://'+clean; let sitemapUrl=clean.replace(/\/$/,'')+'/sitemap.xml'; let proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(sitemapUrl)}`; let res=await fetch(proxy); if(!res.ok) throw new Error(); let txt=await res.text(); let parser=new DOMParser(); let xml=parser.parseFromString(txt,'text/xml'); let locs=[...xml.querySelectorAll('url loc, sitemap loc')].map(el=>el.textContent); if(locs.length===0) throw new Error(); callback(`<div class="p-3 bg-green-50 rounded"><p>✅ ${locs.length} URLs</p><ul class="list-disc pl-5 max-h-64 overflow-auto text-xs">${locs.map(l=>`<li><a href="${l}" target="_blank" class="text-indigo-600 underline">${l}</a></li>`).join('')}</ul></div>`);
-      } catch(e){ callback(`<div class="text-red-600 p-3 bg-red-50 rounded">❌ Sitemap not found. Ensure /sitemap.xml exists or try proxy.</div>`); }
-    }
-    // Hero sitemap generator
-    document.getElementById('heroGenerateSitemapBtn').onclick = async () => { let url=document.getElementById('heroSitemapUrl').value; if(!url) return notify("Enter website URL",1); let loadDiv=document.getElementById('heroSitemapLoading'), resultDiv=document.getElementById('heroSitemapResult'); loadDiv.classList.remove('hidden'); resultDiv.classList.add('hidden'); await fetchSitemapGeneric(url, (html)=>{ loadDiv.classList.add('hidden'); resultDiv.innerHTML=html; resultDiv.classList.remove('hidden'); }); loadDiv.classList.add('hidden'); };
+    function notify(msg, isErr=false) { let d=document.createElement('div'); d.className=`fixed bottom-6 left-1/2 transform -translate-x-1/2 px-5 py-3 rounded-full text-white font-semibold z-[10000] shadow-lg ${isErr?'bg-red-600':'bg-green-700'}`; d.innerText=msg; document.body.appendChild(d); setTimeout(()=>d.remove(),3000); }
     
+    // Tool definitions (including new ones)
     const toolMap = {
-      imageCompressor:{title:"Image Compressor", content:`<input type="file" id="imgCompressFile" accept="image/*" class="border p-2 w-full rounded"><label class="block mt-3">Quality: <span id="qualityVal">80</span>%</label><input type="range" id="qualityRange" min="10" max="100" value="80" class="w-full"><button id="compressBtn" class="mt-4 bg-indigo-600 text-white w-full py-2 rounded-xl">Compress & Download</button>`},
-      imageResizer:{title:"Image Resizer", content:`<input type="file" id="resizeFile" accept="image/*"><div class="flex gap-3 mt-3"><input type="number" id="resizeWidth" placeholder="Width px" class="border p-2 w-1/2 rounded"><input type="number" id="resizeHeight" placeholder="Height px" class="border p-2 w-1/2 rounded"></div><button id="resizeBtn" class="mt-4 bg-emerald-600 text-white w-full py-2 rounded-xl">Resize</button>`},
-      imageConverter:{title:"Image Converter", content:`<input type="file" id="imgConvertFile" accept="image/*"><select id="targetFormat" class="w-full border p-2 mt-3 rounded"><option>png</option><option>jpg</option><option>webp</option></select><button id="convertImgBtn" class="mt-4 bg-amber-600 text-white w-full py-2 rounded-xl">Convert</button>`},
-      webpConverter:{title:"Convert to WebP", content:`<input type="file" id="webpFile" accept="image/*"><button id="webpConvertBtn" class="mt-4 bg-sky-600 text-white w-full py-2 rounded-xl">Convert to WebP</button>`},
-      docConverter:{title:"Document Converter", content:`<select id="docType" class="border p-2 rounded w-full"><option value="docx2txt">DOCX → TXT</option><option value="txt2pdf">TXT → PDF</option></select><input type="file" id="docFile" accept=".docx,.txt" class="mt-3 w-full"><button id="docConvertBtn" class="mt-4 bg-teal-600 text-white w-full py-2 rounded-xl">Convert</button>`},
-      pdfToText:{title:"PDF to Text", content:`<input type="file" id="pdfFile" accept="application/pdf"><button id="pdfToTextBtn" class="mt-4 bg-orange-600 text-white w-full py-2 rounded-xl">Extract Text</button>`},
-      excelConverter:{title:"Excel to CSV", content:`<input type="file" id="excelFile" accept=".xlsx,.xls"><button id="excelToCsvBtn" class="mt-4 bg-green-600 text-white w-full py-2 rounded-xl">Convert to CSV</button>`},
-      zipCreator:{title:"Create ZIP Archive", content:`<input type="file" id="zipFiles" multiple class="border p-2 w-full"><button id="zipCreateBtn" class="mt-4 bg-purple-600 text-white w-full py-2 rounded-xl">Create ZIP</button><p class="text-xs text-gray-500 mt-2">Select multiple files → download .zip</p>`},
-      unzipTool:{title:"Unzip Archive", content:`<input type="file" id="unzipFile" accept=".zip"><button id="unzipBtn" class="mt-3 bg-rose-600 text-white w-full py-2 rounded-xl">Extract & List</button><div id="unzipOutput" class="mt-4 max-h-64 overflow-auto border rounded p-2 text-sm"></div>`},
-      fileSizeReducer:{title:"File Optimizer", content:`<input type="file" id="reduceFile" accept="image/*"><button id="fileReduceBtn" class="mt-4 bg-indigo-600 text-white w-full py-2 rounded-xl">Optimize Image</button>`},
-      sitemapTool:{title:"Sitemap Explorer", content:`<input type="url" id="modalSitemapUrl" placeholder="https://example.com" class="w-full border p-2 rounded"><button id="modalSitemapBtn" class="mt-3 bg-purple-600 text-white w-full py-2 rounded-xl">Fetch Sitemap</button><div id="modalSitemapResult" class="mt-4 hidden"></div>`},
-      sitemapHero:{title:"Sitemap Generator", content:`<p class="mb-3">Enter URL to fetch sitemap:</p><input type="url" id="modalSitemapUrl" placeholder="https://example.com" class="border p-2 w-full rounded"><button id="modalSitemapBtn" class="mt-3 bg-indigo-600 text-white w-full py-2 rounded-xl">Fetch</button><div id="modalSitemapResult" class="mt-4 hidden"></div>`}
+      sitemapBuilder:{title:"Unlimited Sitemap Builder", content:`<div id="modalBuilderContainer"><p class="mb-2">Add unlimited URLs:</p><div class="flex flex-wrap gap-2 mb-3"><input id="modalNewUrl" placeholder="https://..." class="border p-2 flex-1 rounded"><select id="modalFreq"><option>weekly</option><option>daily</option><option>monthly</option></select><input id="modalPriority" placeholder="0.8" class="w-20 border p-2 rounded"><button id="modalAddUrlBtn" class="bg-indigo-600 text-white px-3 rounded">Add</button></div><div class="max-h-52 overflow-auto border rounded"><table class="w-full text-sm"><tbody id="modalUrlList"></tbody></table></div><button id="modalGenerateSitemapFinal" class="mt-4 bg-emerald-600 w-full py-2 text-white rounded-xl">Generate & Download Sitemap</button><p class="text-xs text-gray-500 mt-2">Unlimited entries, XML compliant</p></div>`},
+      sitemapFetcher:{title:"Sitemap Fetcher", content:`<input type="url" id="modalFetchUrl" placeholder="https://example.com" class="w-full border p-2 rounded"><button id="modalFetchBtn" class="mt-3 bg-purple-600 w-full py-2 text-white rounded-xl">Fetch Sitemap</button><div id="modalFetchResult" class="mt-4 hidden"></div>`},
+      robotsGenerator:{title:"Robots.txt Generator", content:`<textarea id="robotsRules" rows="5" class="w-full border rounded p-2" placeholder="User-agent: *\nDisallow: /admin/\nSitemap: https://example.com/sitemap.xml"></textarea><button id="genRobotsBtn" class="mt-3 bg-blue-600 text-white w-full py-2 rounded-xl">Download robots.txt</button>`},
+      metaGenerator:{title:"Meta Tag Generator", content:`<input id="metaTitle" placeholder="Page Title" class="w-full border p-2 rounded mb-2"><input id="metaDesc" placeholder="Meta Description" class="w-full border p-2 rounded mb-2"><input id="metaKeywords" placeholder="Keywords" class="w-full border p-2 rounded mb-2"><button id="generateMetaBtn" class="bg-cyan-600 text-white w-full py-2 rounded">Generate Meta Tags</button><textarea id="metaOutput" rows="4" class="w-full border rounded mt-3 p-2" readonly></textarea>`},
+      qrGenerator:{title:"QR Code Generator", content:`<input id="qrText" placeholder="Enter URL or text" class="w-full border p-2 rounded"><div class="flex gap-2 mt-2"><select id="qrSize"><option value="150">150px</option><option value="250">250px</option></select></div><button id="generateQRBtn" class="mt-3 bg-pink-600 text-white w-full py-2 rounded-xl">Generate QR</button><div id="qrCanvasContainer" class="flex justify-center mt-4"></div>`},
+      base64Tool:{title:"Base64 Encoder/Decoder", content:`<textarea id="base64Input" rows="3" placeholder="Text to encode/decode" class="w-full border rounded p-2"></textarea><div class="flex gap-2 mt-2"><button id="encodeBase64Btn" class="bg-gray-700 text-white px-3 py-1 rounded">Encode</button><button id="decodeBase64Btn" class="bg-gray-700 text-white px-3 py-1 rounded">Decode</button></div><textarea id="base64Output" rows="3" class="w-full border rounded p-2 mt-3" readonly></textarea>`},
+      jsonTool:{title:"JSON Beautifier", content:`<textarea id="jsonInput" rows="5" placeholder='{"name":"ToolForge"}' class="w-full border p-2 rounded"></textarea><button id="formatJsonBtn" class="mt-2 bg-yellow-600 text-white w-full py-2 rounded">Format/Validate</button><textarea id="jsonOutput" rows="5" class="w-full border p-2 rounded mt-3" readonly></textarea>`},
+      loremGen:{title:"Lorem Ipsum Generator", content:`<div><label>Paragraphs: <input id="loremCount" type="number" value="3" min="1" max="20" class="border w-20"></label><button id="generateLoremBtn" class="ml-3 bg-stone-600 text-white px-4 py-1 rounded">Generate</button></div><div id="loremOutput" class="mt-4 p-3 bg-gray-50 rounded max-h-64 overflow-auto"></div>`},
+      imageCompressor:{title:"Image Compressor", content:`<input type="file" id="imgCompressFile" accept="image/*"><label class="block mt-3">Quality: <span id="qualityVal">80</span>%</label><input type="range" id="qualityRange" min="10" max="100" value="80"><button id="compressBtn" class="mt-4 bg-indigo-600 w-full py-2 rounded-xl">Compress & Download</button>`},
+      imageResizer:{title:"Image Resizer", content:`<input type="file" id="resizeFile" accept="image/*"><div class="flex gap-3 mt-3"><input type="number" id="resizeWidth" placeholder="Width px" class="border p-2 w-1/2"><input type="number" id="resizeHeight" placeholder="Height px" class="border p-2 w-1/2"></div><button id="resizeBtn" class="mt-4 bg-emerald-600 w-full py-2 rounded-xl">Resize</button>`},
+      webpConverter:{title:"Convert to WebP", content:`<input type="file" id="webpFile" accept="image/*"><button id="webpConvertBtn" class="mt-4 bg-sky-600 w-full py-2 rounded-xl">Convert to WebP</button>`},
+      zipCreator:{title:"Create ZIP", content:`<input type="file" id="zipFiles" multiple><button id="zipCreateBtn" class="mt-4 bg-purple-600 w-full py-2 rounded-xl">Create ZIP</button>`},
+      unzipTool:{title:"Unzip Archive", content:`<input type="file" id="unzipFile" accept=".zip"><button id="unzipBtn" class="mt-3 bg-rose-600 w-full py-2 rounded-xl">Extract</button><div id="unzipOutput" class="mt-4 max-h-64 overflow-auto border rounded p-2"></div>`},
+      excelConverter:{title:"Excel to CSV", content:`<input type="file" id="excelFile" accept=".xlsx,.xls"><button id="excelToCsvBtn" class="mt-4 bg-green-600 w-full py-2 rounded-xl">Convert</button>`},
+      pdfToText:{title:"PDF to Text", content:`<input type="file" id="pdfFile" accept="application/pdf"><button id="pdfToTextBtn" class="mt-4 bg-orange-600 w-full py-2 rounded-xl">Extract Text</button>`},
+      docConverter:{title:"Document Converter", content:`<select id="docType" class="border p-2 rounded w-full"><option value="docx2txt">DOCX → TXT</option><option value="txt2pdf">TXT → PDF</option></select><input type="file" id="docFile" accept=".docx,.txt"><button id="docConvertBtn" class="mt-4 bg-teal-600 w-full py-2 rounded-xl">Convert</button>`}
     };
-    function openToolByKey(key){ if(toolMap[key]) openToolModal(toolMap[key].title, toolMap[key].content); else notify("Tool coming soon",1); }
+    function openToolByKey(key){ if(toolMap[key]) openToolModal(toolMap[key].title, toolMap[key].content); else notify("Coming soon",1); }
+    function openToolModal(title, html) { modalTitle.innerHTML = `<i class="fas fa-magic mr-2"></i> ${title}`; modalContent.innerHTML = html; modal.classList.remove('invisible','opacity-0'); attachModalEvents(); }
+    window.openToolByKey = openToolByKey;
     document.querySelectorAll('[data-tool]').forEach(el=>el.addEventListener('click',()=>openToolByKey(el.getAttribute('data-tool'))));
     document.querySelectorAll('[data-tool-nav]').forEach(btn=>btn.addEventListener('click',(e)=>{ e.preventDefault(); openToolByKey(btn.getAttribute('data-tool-nav')); }));
-    const policyMap={privacy:"<h2 class='font-bold'>Privacy Policy</h2><p>No data leaves your browser. All processing local. We don't track or store files.</p>",terms:"<h2>Terms</h2><p>Free to use. No warranties. Use at your own discretion.</p>",faq:"<h2>FAQ</h2><p><strong>Is it really free?</strong> Yes, forever.<br><strong>Why sitemap fails?</strong> Some sites block CORS; try alternative URL.</p>",contact:"<h2>Contact</h2><p>support@toolforge.app | Twitter @toolforge</p>"};
-    document.querySelectorAll('.footer-link').forEach(link=>link.addEventListener('click',(e)=>{e.preventDefault(); let p=link.getAttribute('data-policy'); if(policyMap[p]) openToolModal("Info",policyMap[p]); else openToolModal("Info","<p>Details soon.</p>"); }));
-    document.getElementById('mobileMenuBtn').onclick=()=>{document.getElementById('mobileMenu').classList.toggle('hidden');};
-    document.querySelectorAll('.mobile-dropdown .toggle-sub').forEach(icon=>{ icon.addEventListener('click',(e)=>{ e.stopPropagation(); let sub=icon.closest('.mobile-dropdown').querySelector('.submenu'); sub.classList.toggle('hidden'); }); });
+    
+    // Additional event binding inside modal (dynamic)
+    function attachModalEvents() {
+      // Sitemap builder inside modal
+      if(document.getElementById('modalAddUrlBtn')) { let urls=[]; function refreshTable(){ let tbody=document.getElementById('modalUrlList'); if(tbody) tbody.innerHTML=urls.map((u,i)=>`<tr><td class="p-1 truncate">${u.url}</td><td>${u.freq}</td><td>${u.prior}</td><td><button onclick="window.removeUrl(${i})" class="text-red-500">✖</button></td></tr>`).join(''); } window.removeUrl=(idx)=>{ urls.splice(idx,1); refreshTable(); }; document.getElementById('modalAddUrlBtn').onclick=()=>{ let url=document.getElementById('modalNewUrl')?.value, freq=document.getElementById('modalFreq')?.value, prior=document.getElementById('modalPriority')?.value||'0.8'; if(url){ urls.push({url,freq,prior}); refreshTable(); document.getElementById('modalNewUrl').value=''; notify("URL added"); } }; document.getElementById('modalGenerateSitemapFinal').onclick=()=>{ if(urls.length===0){ notify("Add at least one URL",1); return; } let xml=`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`+urls.map(u=>`<url><loc>${escapeXml(u.url)}</loc><changefreq>${u.freq}</changefreq><priority>${u.prior}</priority></url>`).join('')+`</urlset>`; let blob=new Blob([xml],{type:'application/xml'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="sitemap.xml"; a.click(); notify("Sitemap generated!"); }; }
+      if(document.getElementById('modalFetchBtn')) document.getElementById('modalFetchBtn').onclick=async()=>{ let url=document.getElementById('modalFetchUrl').value; if(!url) return; let proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(url.replace(/\/$/,'')+'/sitemap.xml')}`; let res=await fetch(proxy); if(!res.ok){ document.getElementById('modalFetchResult').innerHTML='<div class="text-red-600">Failed</div>'; }else{ let txt=await res.text(); let parser=new DOMParser(), xml=parser.parseFromString(txt,'text/xml'); let locs=[...xml.querySelectorAll('url loc, sitemap loc')].map(el=>el.textContent); document.getElementById('modalFetchResult').innerHTML=`<div class="bg-green-50 p-2 rounded">✅ ${locs.length} URLs<ul class="list-disc pl-4 max-h-40 overflow-auto">${locs.slice(0,30).map(l=>`<li>${l}</li>`).join('')}</ul></div>`; } document.getElementById('modalFetchResult').classList.remove('hidden'); };
+      if(document.getElementById('genRobotsBtn')) document.getElementById('genRobotsBtn').onclick=()=>{ let content=document.getElementById('robotsRules').value; let blob=new Blob([content],{type:'text/plain'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="robots.txt"; a.click(); };
+      if(document.getElementById('generateMetaBtn')){ document.getElementById('generateMetaBtn').onclick=()=>{ let title=document.getElementById('metaTitle').value, desc=document.getElementById('metaDesc').value, kw=document.getElementById('metaKeywords').value; let meta=`<title>${escapeHtml(title)}</title>\n<meta name="description" content="${escapeHtml(desc)}">\n<meta name="keywords" content="${escapeHtml(kw)}">`; document.getElementById('metaOutput').value=meta; }; }
+      if(document.getElementById('generateQRBtn')){ document.getElementById('generateQRBtn').onclick=()=>{ let text=document.getElementById('qrText').value, size=parseInt(document.getElementById('qrSize').value); if(!text) return; let canvas=document.createElement('canvas'); QRCode.toCanvas(canvas, text, {width:size}, error=>{ if(!error) document.getElementById('qrCanvasContainer').innerHTML=''; document.getElementById('qrCanvasContainer').appendChild(canvas); }); }; }
+      if(document.getElementById('encodeBase64Btn')) document.getElementById('encodeBase64Btn').onclick=()=>{ let val=document.getElementById('base64Input').value; document.getElementById('base64Output').value=btoa(unescape(encodeURIComponent(val))); };
+      if(document.getElementById('decodeBase64Btn')) document.getElementById('decodeBase64Btn').onclick=()=>{ let val=document.getElementById('base64Input').value; try{ document.getElementById('base64Output').value=decodeURIComponent(escape(atob(val))); }catch(e){ notify("Invalid base64",1); } };
+      if(document.getElementById('formatJsonBtn')) document.getElementById('formatJsonBtn').onclick=()=>{ try{ let obj=JSON.parse(document.getElementById('jsonInput').value); document.getElementById('jsonOutput').value=JSON.stringify(obj,null,2); }catch(e){ notify("Invalid JSON",1); } };
+      if(document.getElementById('generateLoremBtn')) document.getElementById('generateLoremBtn').onclick=()=>{ let count=parseInt(document.getElementById('loremCount').value); let lorem="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ".repeat(count*30); document.getElementById('loremOutput').innerHTML=lorem.slice(0,1000*count); };
+      // existing compress, resize etc (keep existing handlers placeholder but simple)
+      if(document.getElementById('compressBtn')) document.getElementById('compressBtn').onclick = async () => { let f=document.getElementById('imgCompressFile').files[0], q=document.getElementById('qualityRange')?.value; if(!f) return; let img=new Image(); img.src=URL.createObjectURL(f); await new Promise(r=>img.onload=r); let c=document.createElement('canvas'); c.width=img.width; c.height=img.height; c.getContext('2d').drawImage(img,0,0); c.toBlob(b=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`compressed_${f.name}`; a.click(); notify("Compressed"); }, f.type, q/100); };
+      if(document.getElementById('resizeBtn')) document.getElementById('resizeBtn').onclick = async () => { let f=document.getElementById('resizeFile').files[0], w=parseInt(document.getElementById('resizeWidth').value), h=parseInt(document.getElementById('resizeHeight').value); if(!f) return; let img=new Image(); img.src=URL.createObjectURL(f); await new Promise(r=>img.onload=r); let c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); c.toBlob(b=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`resized_${f.name}`; a.click(); notify("Resized"); }, f.type); };
+      if(document.getElementById('zipCreateBtn')) document.getElementById('zipCreateBtn').onclick = async () => { let filesInput=document.getElementById('zipFiles').files; if(filesInput.length===0) return; let zip=new JSZip(); for(let file of filesInput) zip.file(file.name, file); let blob=await zip.generateAsync({type:"blob"}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="archive.zip"; a.click(); notify("ZIP ready"); };
+      if(document.getElementById('unzipBtn')) document.getElementById('unzipBtn').onclick = async () => { let file=document.getElementById('unzipFile').files[0]; if(!file) return; let zip=await JSZip.loadAsync(file); let outDiv=document.getElementById('unzipOutput'); let html=[]; for(let relPath of Object.keys(zip.files)){ let content=await zip.files[relPath].async("blob"); let url=URL.createObjectURL(content); html.push(`<div><span>${relPath}</span> <a href='${url}' download>Download</a></div>`); } outDiv.innerHTML=html.join(''); };
+      if(document.getElementById('excelToCsvBtn')) document.getElementById('excelToCsvBtn').onclick = async () => { let f=document.getElementById('excelFile').files[0]; if(!f) return; let data=await f.arrayBuffer(); let workbook=XLSX.read(data); let csv=XLSX.utils.sheet_to_csv(workbook.Sheets[workbook.SheetNames[0]]); let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=f.name.replace(/\.xlsx?$/i,'.csv'); a.click(); notify("Converted"); };
+      if(document.getElementById('pdfToTextBtn')) document.getElementById('pdfToTextBtn').onclick = async () => { let f=document.getElementById('pdfFile').files[0]; if(!f) return; let buf=await f.arrayBuffer(); let pdf=await pdfjsLib.getDocument({data:buf}).promise; let txt=''; for(let i=1;i<=pdf.numPages;i++){ let page=await pdf.getPage(i); let content=await page.getTextContent(); txt+=content.items.map(it=>it.str).join(' ')+'\n'; } let blob=new Blob([txt],{type:'text/plain'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=f.name.replace('.pdf','.txt'); a.click(); };
+    }
+    function escapeXml(str){ return str.replace(/[<>&]/g, function(m){ if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; if(m==='&') return '&amp;'; return m;});}
+    function escapeHtml(str){ return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;});}
+    // Hero tabs + builder + fetcher
+    const builderPanel = document.getElementById('builderPanel'), fetcherPanel = document.getElementById('fetcherPanel');
+    document.getElementById('tabBuilderBtn').onclick=()=>{ builderPanel.classList.remove('hidden'); fetcherPanel.classList.add('hidden'); document.getElementById('tabBuilderBtn').classList.add('tab-active','bg-indigo-600','text-white'); document.getElementById('tabBuilderBtn').classList.remove('tab-inactive'); document.getElementById('tabFetcherBtn').classList.add('tab-inactive'); document.getElementById('tabFetcherBtn').classList.remove('tab-active'); };
+    document.getElementById('tabFetcherBtn').onclick=()=>{ fetcherPanel.classList.remove('hidden'); builderPanel.classList.add('hidden'); swapActive(); };
+    function swapActive(){ document.getElementById('tabFetcherBtn').classList.add('tab-active','bg-indigo-600','text-white'); document.getElementById('tabFetcherBtn').classList.remove('tab-inactive'); document.getElementById('tabBuilderBtn').classList.add('tab-inactive'); document.getElementById('tabBuilderBtn').classList.remove('tab-active'); }
+    // builder table logic
+    let urlItems = [];
+    function refreshHeroTable(){ let tbody=document.getElementById('urlTableBody'); if(tbody) tbody.innerHTML=urlItems.map((u,i)=>`<tr class="border-b"><td class="py-1 truncate max-w-[200px]">${u.url}</td><td class="px-1">${u.freq}</td><td class="px-1">${u.prior}</td><td><button class="text-red-500 removeRowBtn" data-idx="${i}"><i class="fas fa-trash"></i></button></td></tr>`).join(''); document.querySelectorAll('.removeRowBtn').forEach(btn=>btn.addEventListener('click',(e)=>{ let idx=parseInt(btn.getAttribute('data-idx')); urlItems.splice(idx,1); refreshHeroTable(); })); }
+    document.getElementById('addUrlBtn').onclick=()=>{ let url=document.getElementById('newUrlInput').value, freq=document.getElementById('changefreqSelect').value, prior=document.getElementById('priorityInput').value; if(url && url.startsWith('http')){ urlItems.push({url,freq,prior}); refreshHeroTable(); document.getElementById('newUrlInput').value=''; document.getElementById('builderMessage').innerText=`${urlItems.length} URLs added`; } else notify("Enter valid URL (https://)",1); };
+    document.getElementById('resetBuilderBtn').onclick=()=>{ urlItems=[]; refreshHeroTable(); document.getElementById('builderMessage').innerText="Cleared"; };
+    document.getElementById('generateSitemapBtn').onclick=()=>{ if(urlItems.length===0){ notify("Add URLs first",1); return; } let xml=`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`+urlItems.map(u=>`<url><loc>${escapeXml(u.url)}</loc><changefreq>${u.freq}</changefreq><priority>${u.prior}</priority></url>`).join('')+`</urlset>`; let blob=new Blob([xml],{type:'application/xml'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="unlimited_sitemap.xml"; a.click(); notify("Sitemap downloaded!"); };
+    async function fetchSitemapGeneric(baseUrl, callback){ try{ let clean=baseUrl.trim(); if(!clean.startsWith('http')) clean='https://'+clean; let sitemapUrl=clean.replace(/\/$/,'')+'/sitemap.xml'; let proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(sitemapUrl)}`; let res=await fetch(proxy); if(!res.ok) throw new Error(); let txt=await res.text(); let parser=new DOMParser(); let xml=parser.parseFromString(txt,'text/xml'); let locs=[...xml.querySelectorAll('url loc, sitemap loc')].map(el=>el.textContent); callback(`<div class="p-3 bg-green-50 rounded"><p>✅ ${locs.length} URLs found</p><ul class="list-disc pl-5 max-h-64 overflow-auto text-xs">${locs.slice(0,50).map(l=>`<li><a href="${l}" target="_blank" class="text-indigo-600 underline">${l}</a></li>`).join('')}</ul></div>`); } catch(e){ callback(`<div class="text-red-600 p-3 bg-red-50 rounded">❌ Sitemap not found.</div>`); } }
+    document.getElementById('heroGenerateSitemapBtn').onclick = async () => { let url=document.getElementById('heroSitemapUrl').value; if(!url) return notify("Enter URL",1); let loadDiv=document.getElementById('heroSitemapLoading'), resultDiv=document.getElementById('heroSitemapResult'); loadDiv.classList.remove('hidden'); resultDiv.classList.add('hidden'); await fetchSitemapGeneric(url, (html)=>{ loadDiv.classList.add('hidden'); resultDiv.innerHTML=html; resultDiv.classList.remove('hidden'); }); loadDiv.classList.add('hidden'); };
+    document.getElementById('mobileMenuBtn').onclick=()=>{ document.getElementById('mobileMenu').classList.toggle('hidden'); };
+    const policyMap={privacy:"<h2 class='font-bold'>Privacy Policy</h2><p>Zero data leaves your browser. All processing is local.</p>",terms:"<h2>Terms</h2><p>Free to use, no warranties.</p>"};
+    document.querySelectorAll('.footer-link').forEach(link=>link.addEventListener('click',(e)=>{e.preventDefault(); let p=link.getAttribute('data-policy'); if(policyMap[p]) openToolModal("Info",policyMap[p]); }));
   </script>
 </body>
 </html>
